@@ -1,0 +1,27 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "tutorial-app-v1"
+client_id = "98325be90fd6444ff17ba3c5417ea63c"
+application_url = "https://communicate-students-jason-communication.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = ""
+
+[auth]
+redirect_urls = [
+  "https://communicate-students-jason-communication.trycloudflare.com/auth/callback",
+  "https://communicate-students-jason-communication.trycloudflare.com/auth/shopify/callback",
+  "https://communicate-students-jason-communication.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-04"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "geoffrey-tutorials.myshopify.com"

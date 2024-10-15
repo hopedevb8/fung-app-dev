@@ -1,0 +1,452 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&family=Exo:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700;800;900;1000&family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root{
+    --green: rgba(0, 122, 92, 1);
+}
+
+*{
+    box-sizing: border-box;
+}
+
+input{
+    font-family: inherit;
+}
+
+#app{
+    height: 100%;
+}
+
+h1{
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.headline{
+    font-size: 2rem;
+    line-height: 1;
+    margin: 25px 0;
+}
+
+h2.headline{
+    font-size: 1.6rem;
+}
+
+.note{
+    font-weight: 500;
+    margin: 5px 0;
+    display: inline-block;
+    margin-left: 5px;
+    color: var(--green);
+}
+
+.loading-wrapper{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.generic-loading{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 100;
+}
+
+.upsell-deleted{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9) !important;
+    z-index: 100;
+    justify-content: center;
+    font-weight: bold;
+    color: red;
+}
+
+.cart-title--activators{
+    display: flex;
+    align-items: center;
+}
+
+.card{
+    background: #fff;
+    padding: 20px;
+    margin: 25px 0;
+    box-shadow: 0 5px 5px #e1e1e1;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card.card-nav{
+    padding: 8px;
+}
+
+.cart-title{
+    font-weight: bold;
+}
+
+.cart-title-button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-wrapper{
+    display: flex;
+    height: 100%;
+}
+
+.main-wrapper--full{
+    display: flex;
+    height: 100%;
+}
+
+.main-wrapper > div:first-child:not(.loading){
+    width: calc(70% - 20px);
+    padding: 0 10px;
+}
+
+.main-wrapper--full> div:first-child:not(.loading){
+    width: calc(100% - 20px);
+    padding: 0 10px;
+}
+
+.main-wrapper--full-loading, .unsaved-changes-wrapper{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.unsaved-changes-wrapper .overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.2);
+}
+
+.unsaved-changes-wrapper > div:not(.overlay) > svg{
+    color: rgba(97, 106, 117, 1);
+    position: absolute;
+    right: 10px;
+    font-size: 24pt;
+    top: 10px;
+    cursor: pointer;
+}
+
+.unsaved-changes-wrapper > div:not(.overlay){
+    position: relative;
+    z-index: 900;
+    padding: 20px;
+    background: #fff;
+    width: 100%;
+    max-width: 61.25rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #aaa;
+}
+
+.unsaved-changes-wrapper h1{
+    margin-bottom: 10px;
+}
+
+.main-wrapper--full-loading .loading{
+    position: relative;
+}
+
+.main-wrapper--full-loading > div{
+
+}
+
+.main-wrapper .cart-preview-wrapper{
+    width: 30%;
+    min-width: 500px;
+    height: 100%;
+    position: fixed;
+    right: 0;
+}
+
+.control-wrapper{
+    margin: 10px 0;
+}
+
+.embed-loading{
+    position: relative;
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.embed-loading .loading{
+    width: 25px;
+    position: relative;
+}
+
+.loading{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.loading svg{
+    font-size: 3rem;
+    -webkit-animation: rotating 1s linear infinite;
+    -moz-animation: rotating 1s linear infinite;
+    -ms-animation: rotating 1s linear infinite;
+    -o-animation: rotating 1s linear infinite;
+    animation: rotating 1s linear infinite;
+}
+
+.clickable, .clickable-design{
+    transition: 0.1s ease-out;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.clickable{
+    z-index: 200 !important;
+    position: relative;
+}
+
+.clickable-design{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.clickable:hover,.clickable-design:hover{
+    background: rgba(0,0,0,0.05);
+    box-shadow: inset 0px 0px 0px 1px green;
+}
+
+.placeholder{
+    background: #f1f1f1;
+    display: block;
+    height: 100%;
+    border-radius: 5px;
+    margin-top: 4px;
+}
+
+/* CECKBOX */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 17px;
+    outline: none;
+}
+
+.switch.switchv2{
+    min-width: 50px;
+    height: 27px;
+}
+
+.switch input {
+    position: absolute;
+    top: -99999px;
+    left: -99999px;
+}
+
+.switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .2s;
+    transition: .2s;
+    border-radius: 34px;
+}
+
+.switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .2s;
+    transition: .2s;
+    border-radius: 50%;
+}
+
+.switch.switchv2 .slider:before {
+    height: 23px;
+    width: 23px;
+}
+
+.switch input:checked + .slider {
+    background-color: var(--green);
+}
+
+.switch input:focus + .slider {
+    box-shadow: 0 0 1px #e1e1e1;
+}
+
+.switch input:checked + .slider:before {
+    -webkit-transform: translateX(23px);
+    -ms-transform: translateX(23px);
+    transform: translateX(23px);
+}
+
+.cart-title--activators > span{
+    font-size: 1rem;
+    font-weight: 400;
+    margin-right: 5px;
+}
+
+.cart-title--activators > span span.active{
+    color: var(--green);
+    font-weight: 500;
+}
+
+.cart-title--activators > span span.inactive{
+    color: red;
+    font-weight: 500;
+}
+
+.billing-wrapper{
+    padding: 50px 0;
+}
+
+.billing-wrap{
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.billing-wrapper h1{
+    text-align: center;
+    font-size: 36pt;
+    font-weight: 700;
+}
+
+.billing-subheadline{
+    margin: 25px 0;
+    text-align: center;
+    font-size: 14pt;
+}
+
+.billing-pricing-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.billing-pricing-wrap > span{
+    font-size: 18pt;
+    font-weight: bold;
+    margin: 0 20px;
+}
+
+.billing-pricing{
+    position: relative;
+    width: 30%;
+    background: #fff;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 2px #aaa;
+    text-align: center;
+    overflow: hidden;
+}
+
+.billing-pricing--title{
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.billing-pricing--price{
+    font-size: 48pt;
+    line-height: 48pt;
+    font-weight: bold;
+    margin: 25px 0 5px 0; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.billing-pricing--price > span{
+    font-size: 18pt;
+}
+
+.billing-pricing--description{
+    font-size: 11pt;
+    margin: 20px 0;
+}
+
+.billing-pricing--cta-note{
+    margin-top: 25px;
+    font-size: 11pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    color: rgba(0,0,0,0.5);
+}
+
+.billing-pricing--cta-note svg{
+    font-size: 14pt;
+    margin-right: 5px;
+}
+
+.billing-pricing--cta-note svg:last-child{
+    margin-left: 20px;
+}
+
+.billing-pricing button{
+    width: 100%;
+    padding: 20px 0;
+}
+
+.billing-current-plan{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    padding: 5px 0;
+    background: #202020;
+    color: #fff;
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

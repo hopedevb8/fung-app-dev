@@ -50,7 +50,7 @@ export default function HomePage() {
   const callApi = async (jsonData) => {
     try {
       const response = await axios.post(
-        "https://cors-anywhere.herokuapp.com/https://evisu-be-uj2m.vercel.app/sync-fung",
+        "https://cors-anywhere.herokuapp.com/https://evisu-be-plum.vercel.app/sync-fung",
         jsonData,
         {
           headers: {

@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 import axios from "axios";
+import { useLocation } from 'react-router-dom';
 
 export default function HomePage() {
   const [file, setFile] = useState(null);
   const [response, setResponse] = useState("");
+   const location = useLocation();
+  const [shopDomain, setShopDomain] = useState('');
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const shop = queryParams.get('shop');
+    if (shop) {
+      setShopDomain(shop); // Lưu tên miền shop vào state
+    }
+  }, [location]);
 
   const handleUpload = () => {
     if (file) {
@@ -71,6 +81,7 @@ export default function HomePage() {
   return (
     <div>
       <h2>Upload File</h2>
+      {shopDomain && <p>Shop Domain: {shopDomain}</p>}
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Submit</button>
       <div>{response}</div>

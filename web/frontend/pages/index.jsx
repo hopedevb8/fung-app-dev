@@ -16,7 +16,7 @@ export default function HomePage() {
     const queryParams = new URLSearchParams(location.search);
     const shop = queryParams.get('shop');
     if (shop) {
-      setShopDomain(shop); // Lưu tên miền shop vào state
+      setShopDomain(shop); 
     }
   }, [location]);
 
@@ -57,26 +57,32 @@ export default function HomePage() {
     }
   };
 
-  const callApi = async (jsonData) => {
-    try {
-      const response = await axios.post(
-        "https://evisu-be-plum.vercel.app/sync-fung",
-        jsonData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Success:", response.data);
-      setResponse("Success: " + JSON.stringify(response.data));
-      alert("Success");
-    } catch (error) {
-      console.error("Error:", error);
-      setResponse("Error: " + error.message);
-      alert("Error");
-    }
-  };
+  const callApi = async (jsonData, shopName) => {
+  try {
+    // Include shopName in the data sent to the API
+    const dataToSend = {
+      shopName: shopName,
+      items: jsonData // Assuming `jsonData` contains the items array
+    };
+
+    const response = await axios.post(
+      "https://evisu-be-plum.vercel.app/sync-fung",
+      dataToSend,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("Success:", response.data);
+    setResponse("Success: " + JSON.stringify(response.data));
+    alert("Success");
+  } catch (error) {
+    console.error("Error:", error);
+    setResponse("Error: " + error.message);
+    alert("Error");
+  }
+};
 
   return (
     <div>

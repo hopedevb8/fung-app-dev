@@ -32,7 +32,7 @@ export default function HomePage() {
         const worksheet = workbook.Sheets[firstSheetName];
 
         const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        const keys = jsonData.shift(); // Bỏ dòng header ra khỏi jsonData
+        const keys = jsonData.shift();
         const formattedJson = jsonData.map((row) => {
           let obj = {};
           keys.forEach((key, index) => {
@@ -89,7 +89,7 @@ export default function HomePage() {
     <div>
       <h2>Upload File</h2>
       {shopDomain && <p>Shop Domain: {shopDomain}</p>}
-      {shopName && <p>Shop Domain: {shopName}</p>}
+      {shopName && <p>Shop Name: {shopName}</p>}
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Submit</button>
       <div>{response}</div>

@@ -19,6 +19,7 @@ export default function HomePage() {
       setShopDomain(shop); 
     }
   }, [location]);
+  const shopName = shopDomain.split(".myshopify.com")[0];
 
   const handleUpload = () => {
     if (file) {
@@ -51,7 +52,7 @@ export default function HomePage() {
           return obj;
         });
         console.log(formattedJson);
-        callApi(formattedJson);
+        callApi(formattedJson,shopName);
       };
       reader.readAsBinaryString(file);
     }
@@ -88,6 +89,7 @@ export default function HomePage() {
     <div>
       <h2>Upload File</h2>
       {shopDomain && <p>Shop Domain: {shopDomain}</p>}
+      {shopName && <p>Shop Domain: {shopName}</p>}
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Submit</button>
       <div>{response}</div>

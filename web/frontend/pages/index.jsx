@@ -79,10 +79,16 @@ export default function HomePage() {
     setResponse("Success: " + JSON.stringify(response.data));
     alert("Success");
   } catch (error) {
-    console.error("Error:", error);
-    setResponse("Error: " + error.message);
-    alert("Error");
-  }
+        if (error.response) {
+            console.error("Error:", error.response.data);
+            setResponse("Error: " + error.response.data.error);
+            alert(`Error: ${error.response.data.error}`);
+        } else {
+            console.error("Error:", error.message);
+            setResponse("Error: " + error.message);
+            alert("Error: " + error.message);
+        }
+    }
 };
 
   return (

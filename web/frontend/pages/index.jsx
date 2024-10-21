@@ -80,9 +80,11 @@ export default function HomePage() {
     alert("Success");
   } catch (error) {
         if (error.response) {
-            console.error("Error:", error.response.data);
-            setResponse("Error: " + error.response.data.error);
-            alert(`Error: ${error.response.data.error}`);
+            const errorMessage = error.response.data.error || error.response.data.message || "Unknown error occurred";
+            console.error("Error:", errorMessage);
+
+            setResponse("Error: " + errorMessage);
+            alert(`Error: ${errorMessage}`);
         } else {
             console.error("Error:", error.message);
             setResponse("Error: " + error.message);

@@ -6,13 +6,25 @@ import { useLocation } from 'react-router-dom';
 export default function HomePage() {
   const [file, setFile] = useState(null);
   const [response, setResponse] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const location = useLocation();
   const [shopDomain, setShopDomain] = useState('');
   const fileInputRef = useRef(null); // Ref to reset the file input
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
+  const selectedFile = e.target.files[0];
+
+  if (selectedFile) {
+    const fileType = selectedFile.name.split('.').pop().toLowerCase();
+    if (fileType !== 'xlsx' && fileType !== 'csv') {
+      alert("Please upload a valid file (.xlsx or .csv)");
+      setFile(null); // Reset the file state if invalid
+      e.target.value = ""; // Reset the input field
+    } else {
+      setFile(selectedFile); // Only set the file if it's valid
+    }
+  }
+};
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -26,6 +38,7 @@ export default function HomePage() {
 
   const handleUpload = () => {
     if (file) {
+      setIsSubmitting(true); 
       const reader = new FileReader();
       reader.onload = (e) => {
         const data = e.target.result;
@@ -106,7 +119,9 @@ export default function HomePage() {
 
     setFile(null);
     fileInputRef.current.value = ""; // Reset file input
-  }
+    } finally {
+      setIsSubmitting(false); // Re-enable submit button after request completes
+    }
 };
 
 
@@ -115,8 +130,8 @@ export default function HomePage() {
       <h2>Upload File</h2>
       {shopDomain && <p>Shop Domain: {shopDomain}</p>}
       {shopName && <p>Shop Name: {shopName}</p>}
-      <input type="file" onChange={handleFileChange} ref={fileInputRef} /> {/* Use ref */}
-      <button onClick={handleUpload}>Submit</button>
+      <input type="file" accept=".xlsx, .csv" onChange={handleFileChange} ref={fileInputRef} /> {/* Use ref */}
+      <button onClick={handleUpload} disabled={isSubmitting}> {isSubmitting ? "Submitting..." : "Submit"}</button>
       <div>{response}</div>
     </div>
   );

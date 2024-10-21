@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as XLSX from "xlsx";
 import axios from "axios";
 import { useLocation } from 'react-router-dom';
@@ -6,12 +6,14 @@ import { useLocation } from 'react-router-dom';
 export default function HomePage() {
   const [file, setFile] = useState(null);
   const [response, setResponse] = useState("");
-   const location = useLocation();
+  const location = useLocation();
   const [shopDomain, setShopDomain] = useState('');
+  const fileInputRef = useRef(null); // Ref to reset the file input
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const shop = queryParams.get('shop');
@@ -19,6 +21,7 @@ export default function HomePage() {
       setShopDomain(shop); 
     }
   }, [location]);
+
   const shopName = shopDomain.split(".myshopify.com")[0];
 
   const handleUpload = () => {
@@ -52,53 +55,60 @@ export default function HomePage() {
           return obj;
         });
         console.log(formattedJson);
-        callApi(formattedJson,shopName);
+        callApi(formattedJson, shopName);
       };
       reader.readAsBinaryString(file);
     }
   };
 
   const callApi = async (jsonData, shopName) => {
-  try {
-    // Include shopName in the data sent to the API
-    const dataToSend = {
-      shopName: shopName,
-      items: jsonData // Assuming `jsonData` contains the items array
-    };
+    try {
+      const dataToSend = {
+        shopName: shopName,
+        items: jsonData 
+      };
 
-    const response = await axios.post(
-      "https://evisu-be-plum.vercel.app/sync-fung",
-      dataToSend,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log("Success:", response.data);
-    setResponse("Success: " + JSON.stringify(response.data));
-    alert("Success");
-  } catch (error) {
-        if (error.response) {
-            const errorMessage = error.response.data.error || error.response.data.message || "Unknown error occurred";
-            console.error("Error:", errorMessage);
-
-            setResponse("Error: " + errorMessage);
-            alert(`Error: ${errorMessage}`);
-        } else {
-            console.error("Error:", error.message);
-            setResponse("Error: " + error.message);
-            alert("Error: " + error.message);
+      const response = await axios.post(
+        "https://evisu-be-plum.vercel.app/sync-fung",
+        dataToSend,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
+      );
+      console.log("Success:", response.data);
+      setResponse("Success: " + JSON.stringify(response.data));
+      alert("Success");
+
+      // Reset the file input and response after successful upload
+      setFile(null);
+      fileInputRef.current.value = ""; // Reset file input
+      setResponse(""); // Clear the response if needed
+    } catch (error) {
+      if (error.response) {
+        const errorMessage = error.response.data.error || error.response.data.message || "Unknown error occurred";
+        console.error("Error:", errorMessage);
+        setResponse("Error: " + errorMessage);
+        alert(`Error: ${errorMessage}`);
+      } else {
+        console.error("Error:", error.message);
+        setResponse("Error: " + error.message);
+        alert("Error: " + error.message);
+      }
+
+      // Optionally reset after error as well
+      setFile(null);
+      fileInputRef.current.value = ""; // Reset file input
     }
-};
+  };
 
   return (
     <div>
       <h2>Upload File</h2>
       {shopDomain && <p>Shop Domain: {shopDomain}</p>}
       {shopName && <p>Shop Name: {shopName}</p>}
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" onChange={handleFileChange} ref={fileInputRef} /> {/* Use ref */}
       <button onClick={handleUpload}>Submit</button>
       <div>{response}</div>
     </div>

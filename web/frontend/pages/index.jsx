@@ -62,46 +62,53 @@ export default function HomePage() {
   };
 
   const callApi = async (jsonData, shopName) => {
-    try {
-      const dataToSend = {
-        shopName: shopName,
-        items: jsonData 
-      };
+  try {
+    const dataToSend = {
+      shopName: shopName,
+      items: jsonData 
+    };
 
-      const response = await axios.post(
-        "https://evisu-be-plum.vercel.app/sync-fung",
-        dataToSend,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("Success:", response.data);
-      setResponse("Success: " + JSON.stringify(response.data));
-      alert("Success");
-
-      // Reset the file input and response after successful upload
-      setFile(null);
-      fileInputRef.current.value = ""; // Reset file input
-      setResponse(""); // Clear the response if needed
-    } catch (error) {
-      if (error.response) {
-        const errorMessage = error.response.data.error || error.response.data.message || "Unknown error occurred";
-        console.error("Error:", errorMessage);
+    const response = await axios.post(
+      "https://evisu-be-plum.vercel.app/sync-fung",
+      dataToSend,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("Success:", response.data);
+    setResponse("Success: " + JSON.stringify(response.data));
+    alert("Success");
+    
+    setFile(null);
+    fileInputRef.current.value = ""; // Reset file input
+    setResponse("");
+  } catch (error) {
+    if (error.response) {
+      const errorMessage = error.response.data.message || "Unknown error occurred";
+      const errorsList = error.response.data.errors || [];
+      console.error("Error:", errorMessage);
+      // Show all errors if available
+      if (errorsList.length > 0) {
+        const allErrors = errorsList.join("\n");
+        setResponse("Error: " + errorMessage + "\nDetails:\n" + allErrors);
+        alert(`Error: ${errorMessage}\nDetails:\n${allErrors}`);
+      } else {
         setResponse("Error: " + errorMessage);
         alert(`Error: ${errorMessage}`);
-      } else {
-        console.error("Error:", error.message);
-        setResponse("Error: " + error.message);
-        alert("Error: " + error.message);
       }
-
-      // Optionally reset after error as well
-      setFile(null);
-      fileInputRef.current.value = ""; // Reset file input
+    } else {
+      console.error("Error:", error.message);
+      setResponse("Error: " + error.message);
+      alert("Error: " + error.message);
     }
-  };
+
+    setFile(null);
+    fileInputRef.current.value = ""; // Reset file input
+  }
+};
+
 
   return (
     <div>
